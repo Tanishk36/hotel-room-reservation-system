@@ -20,9 +20,11 @@ test {
     useJUnitPlatform()
 }
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes(
                 'Main-Class': 'org.hotel.WebServer'
         )
     }
 }
+
