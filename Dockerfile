@@ -2,18 +2,14 @@ FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-# Install bash (gradlew needs it)
-RUN apt-get update && apt-get install -y bash
+# Install gradle
+RUN apt-get update && apt-get install -y gradle
 
 COPY . .
 
-# Fix Windows line endings + permissions
-RUN sed -i 's/\r$//' gradlew
-RUN chmod +x gradlew
-
-# Build the app
-RUN bash ./gradlew build
+# Build using system gradle (NOT gradlew)
+RUN gradle build
 
 EXPOSE 4567
 
-CMD ["java", "-cp", "build/libs/*", "org.hotel.WebServer"]
+CMD ["java", "-cp", "build/classes/java/main:build/resources/main", "org.hotel.WebServer"]
